@@ -31,14 +31,14 @@ To enable code sniff, аdd to `post-install-cmd` and `post-update-cmd` in `compo
 
     "scripts": {
         "install-hooks": [
-	    "[ $COMPOSER_DEV_MODE -eq 1 ] && sh ./vendor/smgladkovskiy/phpcs-git-pre-commit/src/setup.sh || return 0"
-	],
+	        "[ $COMPOSER_DEV_MODE -eq 0 ] || sh ./vendor/smgladkovskiy/phpcs-git-pre-commit/src/setup.sh"
+	    ],
         "post-install-cmd": [
-	    "@install-hooks"
-	],
+            "@install-hooks"
+        ],
         "post-update-cmd": [
-	    "@install-hooks"
-	]
+            "@install-hooks"
+        ]
     }
 
 Then run `composer install` or `composer update`. `pre-commit` hook will be installed or updated if it already exists.
@@ -47,7 +47,7 @@ Then run `composer install` or `composer update`. `pre-commit` hook will be inst
 
 Run `git commit` and pre-commit hook will check your committed files like if you run
 
-    php phpcs.phar --standard=Magento2 --encoding=utf-8 -p /path/to/file.php
+    php phpcs.phar --standard=Magento2 --encoding=utf-8 -n -p /path/to/file.php
 
 ## Contributing
 
